@@ -4,6 +4,10 @@ appVersion: "1.0.0"
 server:
   port: 8081
 
+jwt:
+  secret: xJ5yS1PbV9gQjM/zquVr6zJrLnx6aUOVDOiFSjwwjXU=
+  expiration: 186400000
+
 spring:
   devtools:
     livereload:

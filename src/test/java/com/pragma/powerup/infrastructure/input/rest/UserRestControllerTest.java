@@ -42,7 +42,7 @@ class UserRestControllerTest {
         userOwnerRequest = new UserOwnerRequest();
         userOwnerRequest.setFirstName("John");
         userOwnerRequest.setLastName("Doe");
-        userOwnerRequest.setDocumentNumber(123456789L);
+        userOwnerRequest.setDocumentNumber("123456789");
         userOwnerRequest.setPhone("+1234567893");
         userOwnerRequest.setBirthDate(LocalDate.of(1990, 5, 15));
         userOwnerRequest.setEmail("test@test.com");

@@ -26,7 +26,7 @@ public class UserOwnerRequest {
     @NotNull(message = ValidationConstants.DOCUMENT_NUMBER_REQUIRED)
     @Min(value = 1, message = ValidationConstants.DOCUMENT_NUMBER_POSITIVE)
     @Schema(description = "Document number of the owner", example = "123456789")
-    private Long documentNumber;
+    private String documentNumber;
 
     @NotBlank(message = ValidationConstants.PHONE_REQUIRED)
     @Size(max = 13, message = ValidationConstants.PHONE_MAX_LENGTH)

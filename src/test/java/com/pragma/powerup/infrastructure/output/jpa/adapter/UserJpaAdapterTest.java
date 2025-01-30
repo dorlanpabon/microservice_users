@@ -81,22 +81,22 @@ class UserJpaAdapterTest {
 
     @Test
     void testExistsByDocumentNumber_UserExists() {
-        when(userRepository.existsByDocumentNumber(123456789L)).thenReturn(true);
+        when(userRepository.existsByDocumentNumber("123456789")).thenReturn(true);
 
-        boolean exists = userJpaAdapter.existsByDocumentNumber(123456789L);
+        boolean exists = userJpaAdapter.existsByDocumentNumber("123456789");
 
         assertTrue(exists);
-        verify(userRepository).existsByDocumentNumber(123456789L);
+        verify(userRepository).existsByDocumentNumber("123456789");
     }
 
     @Test
     void testExistsByDocumentNumber_UserDoesNotExist() {
 
-        when(userRepository.existsByDocumentNumber(987654321L)).thenReturn(false);
+        when(userRepository.existsByDocumentNumber("987654321")).thenReturn(false);
 
-        boolean exists = userJpaAdapter.existsByDocumentNumber(987654321L);
+        boolean exists = userJpaAdapter.existsByDocumentNumber("987654321");
 
         assertFalse(exists);
-        verify(userRepository).existsByDocumentNumber(987654321L);
+        verify(userRepository).existsByDocumentNumber("987654321");
     }
 }

@@ -16,7 +16,7 @@ class UserRequestMapperTest {
         UserOwnerRequest request = new UserOwnerRequest();
         request.setFirstName("John");
         request.setLastName("Doe");
-        request.setDocumentNumber(123456789L);
+        request.setDocumentNumber("123456789");
         request.setPhone("+123456789");
         request.setBirthDate(LocalDate.of(1990, 5, 15));
         request.setEmail("johndoe@example.com");

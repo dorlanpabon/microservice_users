@@ -21,7 +21,7 @@ class UserTest {
         user.setId(1L);
         user.setFirstName("John");
         user.setLastName("Doe");
-        user.setDocumentNumber(123456789L);
+        user.setDocumentNumber("123456789");
         user.setPhone("+123456789");
         user.setBirthDate(LocalDate.of(1990, 5, 15));
         user.setEmail("john.doe@example.com");
@@ -70,13 +70,13 @@ class UserTest {
 
     @Test
     void getDocumentNumber() {
-        assertEquals(123456789L, user.getDocumentNumber());
+        assertEquals("123456789", user.getDocumentNumber());
     }
 
     @Test
     void setDocumentNumber() {
-        user.setDocumentNumber(987654321L);
-        assertEquals(987654321L, user.getDocumentNumber());
+        user.setDocumentNumber("987654321");
+        assertEquals("987654321", user.getDocumentNumber());
     }
 
     @Test

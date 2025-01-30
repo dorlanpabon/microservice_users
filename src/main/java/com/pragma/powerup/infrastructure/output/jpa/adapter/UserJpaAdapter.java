@@ -6,6 +6,8 @@ import com.pragma.powerup.infrastructure.output.jpa.mapper.UserEntityMapper;
 import com.pragma.powerup.infrastructure.output.jpa.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 public class UserJpaAdapter implements IUserPersistencePort {
 
@@ -24,7 +26,18 @@ public class UserJpaAdapter implements IUserPersistencePort {
     }
 
     @Override
-    public boolean existsByDocumentNumber(Long documentNumber) {
+    public boolean existsByDocumentNumber(String documentNumber) {
         return userRepository.existsByDocumentNumber(documentNumber);
+    }
+
+    @Override
+    public boolean isOwner(Long userId, Long roleId) {
+        return userRepository.existsByIdAndRoleId(userId, roleId);
+    }
+
+    @Override
+    public Optional<User> getUser(String email) {
+        return userRepository.findByEmail(email)
+                .map(userEntityMapper::toDomain);
     }
 }

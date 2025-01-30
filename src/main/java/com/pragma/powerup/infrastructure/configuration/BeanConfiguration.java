@@ -1,6 +1,7 @@
 package com.pragma.powerup.infrastructure.configuration;
 
 import com.pragma.powerup.domain.api.IUserServicePort;
+import com.pragma.powerup.domain.spi.IPasswordEncoderPort;
 import com.pragma.powerup.domain.spi.IRolePersistencePort;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
 import com.pragma.powerup.domain.usecase.UserUseCase;
@@ -35,7 +36,7 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public IUserServicePort userServicePort() {
-        return new UserUseCase(userPersistencePort(), rolePersistencePort());
+    public IUserServicePort userServicePort(IPasswordEncoderPort passwordEncoderPort) {
+        return new UserUseCase(userPersistencePort(), rolePersistencePort(), passwordEncoderPort);
     }
 }

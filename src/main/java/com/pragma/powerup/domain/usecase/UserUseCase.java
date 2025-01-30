@@ -6,6 +6,7 @@ import com.pragma.powerup.domain.enums.RolesEnum;
 import com.pragma.powerup.domain.exception.DomainException;
 import com.pragma.powerup.domain.model.Role;
 import com.pragma.powerup.domain.model.User;
+import com.pragma.powerup.domain.spi.IPasswordEncoderPort;
 import com.pragma.powerup.domain.spi.IRolePersistencePort;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
 
@@ -16,10 +17,12 @@ public class UserUseCase implements IUserServicePort {
 
     private final IUserPersistencePort userPersistencePort;
     private final IRolePersistencePort rolePersistencePort;
+    private final IPasswordEncoderPort passwordEncoderPort;
 
-    public UserUseCase(IUserPersistencePort userPersistencePort, IRolePersistencePort rolePersistencePort) {
+    public UserUseCase(IUserPersistencePort userPersistencePort, IRolePersistencePort rolePersistencePort, IPasswordEncoderPort passwordEncoderPort) {
         this.userPersistencePort = userPersistencePort;
         this.rolePersistencePort = rolePersistencePort;
+        this.passwordEncoderPort = passwordEncoderPort;
     }
 
     @Override
@@ -38,7 +41,25 @@ public class UserUseCase implements IUserServicePort {
                 .orElseThrow(() -> new DomainException(DomainConstants.ROLE_NOT_FOUND));
         user.setRole(role);
 
+        user.setPassword(passwordEncoderPort.encode(user.getPassword()));
+
         userPersistencePort.saveOwnerUser(user);
+    }
+
+    @Override
+    public void isOwner(Long userId) {
+        Role role = rolePersistencePort.getRoleByName(RolesEnum.OWNER)
+                .orElseThrow(() -> new DomainException(DomainConstants.ROLE_NOT_FOUND));
+
+        if (Boolean.FALSE.equals(userPersistencePort.isOwner(userId, role.getId()))) {
+            throw new DomainException(DomainConstants.USER_NOT_OWNER);
+        }
+    }
+
+    @Override
+    public User getUser(String email) {
+        return userPersistencePort.getUser(email)
+                .orElseThrow(() -> new DomainException(DomainConstants.USER_NOT_FOUND));
     }
 
     private void validateUserOwner(User user) {

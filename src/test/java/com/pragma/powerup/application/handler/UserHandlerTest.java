@@ -38,13 +38,13 @@ class UserHandlerTest {
         userOwnerRequest.setEmail("test@test.com");
         userOwnerRequest.setPhone("+123456789");
         userOwnerRequest.setBirthDate(LocalDate.of(2000, 1, 1));
-        userOwnerRequest.setDocumentNumber(123456789L);
+        userOwnerRequest.setDocumentNumber("123456789");
 
         user = new User();
         user.setEmail("test@test.com");
         user.setPhone("+123456789");
         user.setBirthDate(LocalDate.of(2000, 1, 1));
-        user.setDocumentNumber(123456789L);
+        user.setDocumentNumber("123456789L");
     }
 
     @Test

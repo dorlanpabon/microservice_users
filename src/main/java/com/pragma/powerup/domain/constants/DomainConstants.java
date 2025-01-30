@@ -14,6 +14,9 @@ public class DomainConstants {
     public static final int MINIMUM_AGE = 18;
     public static final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$";
     public static final String PHONE_REGEX = "^\\+?\\d{1,13}$";
+    public static final String USER_NOT_OWNER = "The user is not an owner";
+
+    public static final String USER_NOT_FOUND = "User not found";
 
     private DomainConstants() {
         throw new IllegalStateException("Utility class");

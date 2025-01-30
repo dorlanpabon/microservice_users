@@ -6,7 +6,7 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
-    private Long documentNumber;
+    private String documentNumber;
     private String phone;
     private LocalDate birthDate;
     private String email;
@@ -38,11 +38,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Long getDocumentNumber() {
+    public String getDocumentNumber() {
         return documentNumber;
     }
 
-    public void setDocumentNumber(Long documentNumber) {
+    public void setDocumentNumber(String documentNumber) {
         this.documentNumber = documentNumber;
     }
 

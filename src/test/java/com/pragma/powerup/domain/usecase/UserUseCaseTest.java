@@ -18,7 +18,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -42,13 +41,13 @@ class UserUseCaseTest {
         user.setEmail("test@gmail.com");
         user.setPhone("+123456789");
         user.setBirthDate(LocalDate.of(2000, 1, 1));
-        user.setDocumentNumber(123456789L);
+        user.setDocumentNumber("123456789");
     }
 
     @Test
     void saveOwnerUser_Success() {
         when(userPersistencePort.existsByEmail(anyString())).thenReturn(false);
-        when(userPersistencePort.existsByDocumentNumber(anyLong())).thenReturn(false);
+        when(userPersistencePort.existsByDocumentNumber(anyString())).thenReturn(false);
         when(rolePersistencePort.getRoleByName(any(RolesEnum.class))).thenReturn(Optional.of(new Role()));
 
         assertDoesNotThrow(() -> userUseCase.saveOwnerUser(user));
@@ -68,7 +67,7 @@ class UserUseCaseTest {
     @Test
     void saveOwnerUser_ThrowsException_WhenDocumentNumberExists() {
         when(userPersistencePort.existsByEmail(anyString())).thenReturn(false);
-        when(userPersistencePort.existsByDocumentNumber(anyLong())).thenReturn(true);
+        when(userPersistencePort.existsByDocumentNumber(anyString())).thenReturn(true);
 
         DomainException exception = assertThrows(DomainException.class, () -> userUseCase.saveOwnerUser(user));
 
@@ -78,7 +77,7 @@ class UserUseCaseTest {
     @Test
     void saveOwnerUser_ThrowsException_WhenRoleNotFound() {
         when(userPersistencePort.existsByEmail(anyString())).thenReturn(false);
-        when(userPersistencePort.existsByDocumentNumber(anyLong())).thenReturn(false);
+        when(userPersistencePort.existsByDocumentNumber(anyString())).thenReturn(false);
         when(rolePersistencePort.getRoleByName(any(RolesEnum.class))).thenReturn(Optional.empty());
 
         DomainException exception = assertThrows(DomainException.class, () -> userUseCase.saveOwnerUser(user));

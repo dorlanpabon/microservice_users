@@ -2,11 +2,17 @@ package com.pragma.powerup.domain.spi;
 
 import com.pragma.powerup.domain.model.User;
 
+import java.util.Optional;
+
 public interface IUserPersistencePort {
 
     boolean existsByEmail(String email);
 
     void saveOwnerUser(User user);
 
-    boolean existsByDocumentNumber(Long documentNumber);
+    boolean existsByDocumentNumber(String documentNumber);
+
+    boolean isOwner(Long userId, Long roleId);
+
+    Optional<User> getUser(String email);
 }
