@@ -73,7 +73,7 @@ class UserJpaAdapterTest {
         when(userEntityMapper.toEntity(user)).thenReturn(userEntity);
         when(userRepository.save(userEntity)).thenReturn(userEntity);
 
-        userJpaAdapter.saveOwnerUser(user);
+        userJpaAdapter.saveUser(user);
 
         verify(userEntityMapper).toEntity(user);
         verify(userRepository).save(userEntity);

@@ -52,7 +52,7 @@ class UserUseCaseTest {
 
         assertDoesNotThrow(() -> userUseCase.saveOwnerUser(user));
 
-        verify(userPersistencePort).saveOwnerUser(any(User.class));
+        verify(userPersistencePort).saveUser(any(User.class));
     }
 
     @Test

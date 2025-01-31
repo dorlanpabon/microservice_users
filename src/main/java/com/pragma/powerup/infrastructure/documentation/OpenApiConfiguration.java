@@ -25,9 +25,9 @@ public class OpenApiConfiguration {
                 .termsOfService("http://swagger.io/terms/")
                 .license(new License().name("Apache 2.0").url("http://springdoc.org"))
             )
-                .addSecurityItem(new SecurityRequirement().addList("BearerAuth")) // 🔒 Se requiere autenticación
-                .components(new Components().addSecuritySchemes("BearerAuth",
-                        securityScheme()));
+            .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
+            .components(new Components().addSecuritySchemes("BearerAuth",
+                    securityScheme()));
     }
     private SecurityScheme securityScheme() {
         return new SecurityScheme()

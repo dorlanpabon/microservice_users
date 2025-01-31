@@ -26,15 +26,18 @@ ext {
 	lombokMapstructBindingVersion = "0.2.0"
 	mySqlConnectorVersion = "8.0.32"
 	openApiVersion = "1.6.11"
+	springCloudVersion = "2021.0.8"
 }
 
 dependencies {
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
 	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
 	implementation 'io.jsonwebtoken:jjwt:0.12.6'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
 	developmentOnly "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
 	testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
@@ -60,5 +63,11 @@ jacocoTestReport {
 	reports {
 		xml.enabled true
 		html.enabled true
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
 	}
 }

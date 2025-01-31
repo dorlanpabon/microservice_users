@@ -1,5 +1,6 @@
 package com.pragma.powerup.domain.usecase;
 
+import com.pragma.powerup.domain.api.IEmployeeServicePort;
 import com.pragma.powerup.domain.api.IUserServicePort;
 import com.pragma.powerup.domain.constants.DomainConstants;
 import com.pragma.powerup.domain.enums.RolesEnum;
@@ -18,11 +19,13 @@ public class UserUseCase implements IUserServicePort {
     private final IUserPersistencePort userPersistencePort;
     private final IRolePersistencePort rolePersistencePort;
     private final IPasswordEncoderPort passwordEncoderPort;
+    private final IEmployeeServicePort employeeServicePort;
 
-    public UserUseCase(IUserPersistencePort userPersistencePort, IRolePersistencePort rolePersistencePort, IPasswordEncoderPort passwordEncoderPort) {
+    public UserUseCase(IUserPersistencePort userPersistencePort, IRolePersistencePort rolePersistencePort, IPasswordEncoderPort passwordEncoderPort, IEmployeeServicePort employeeServicePort) {
         this.userPersistencePort = userPersistencePort;
         this.rolePersistencePort = rolePersistencePort;
         this.passwordEncoderPort = passwordEncoderPort;
+        this.employeeServicePort = employeeServicePort;
     }
 
     @Override
@@ -72,7 +75,13 @@ public class UserUseCase implements IUserServicePort {
 
         user.setPassword(passwordEncoderPort.encode(user.getPassword()));
 
-        userPersistencePort.saveUser(user);
+        Long employeeId = userPersistencePort.saveUser(user);
+        Long ownerId = employeeServicePort.getUserId();
+
+        if (!employeeServicePort.saveEmployee(employeeId, ownerId)) {
+            throw new DomainException(DomainConstants.EMPLOYEE_ERROR_SAVE);
+        }
+
     }
 
     @Override

@@ -17,6 +17,7 @@ public class DomainConstants {
     public static final String USER_NOT_OWNER = "The user is not an owner";
 
     public static final String USER_NOT_FOUND = "User not found";
+    public static final String EMPLOYEE_ERROR_SAVE = "Error saving employee";
 
     private DomainConstants() {
         throw new IllegalStateException("Utility class");
