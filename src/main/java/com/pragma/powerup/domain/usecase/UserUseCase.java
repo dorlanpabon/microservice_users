@@ -43,7 +43,7 @@ public class UserUseCase implements IUserServicePort {
 
         user.setPassword(passwordEncoderPort.encode(user.getPassword()));
 
-        userPersistencePort.saveOwnerUser(user);
+        userPersistencePort.saveUser(user);
     }
 
     @Override
@@ -62,17 +62,49 @@ public class UserUseCase implements IUserServicePort {
                 .orElseThrow(() -> new DomainException(DomainConstants.USER_NOT_FOUND));
     }
 
+    @Override
+    public void saveEmployeeUser(User user) {
+        validateUserEmployee(user);
+
+        Role role = rolePersistencePort.getRoleByName(RolesEnum.EMPLOYEE)
+                .orElseThrow(() -> new DomainException(DomainConstants.ROLE_NOT_FOUND));
+        user.setRole(role);
+
+        user.setPassword(passwordEncoderPort.encode(user.getPassword()));
+
+        userPersistencePort.saveUser(user);
+    }
+
+    @Override
+    public void saveClientUser(User user) {
+        validateCommonUserFields(user);
+
+        Role role = rolePersistencePort.getRoleByName(RolesEnum.CLIENT)
+                .orElseThrow(() -> new DomainException(DomainConstants.ROLE_NOT_FOUND));
+        user.setRole(role);
+
+        user.setPassword(passwordEncoderPort.encode(user.getPassword()));
+
+        userPersistencePort.saveUser(user);
+    }
+
     private void validateUserOwner(User user) {
+        validateCommonUserFields(user);
+        if (Period.between(user.getBirthDate(), LocalDate.now()).getYears() < DomainConstants.MINIMUM_AGE) {
+            throw new DomainException(DomainConstants.USER_UNDERAGE);
+        }
+    }
+
+    private void validateUserEmployee(User user) {
+        validateCommonUserFields(user);
+    }
+
+    private void validateCommonUserFields(User user) {
         if (!user.getEmail().matches(DomainConstants.EMAIL_REGEX)) {
             throw new DomainException(DomainConstants.INVALID_EMAIL);
         }
-
         if (!user.getPhone().matches(DomainConstants.PHONE_REGEX)) {
             throw new DomainException(DomainConstants.INVALID_PHONE);
-        }
-
-        if (Period.between(user.getBirthDate(), LocalDate.now()).getYears() < DomainConstants.MINIMUM_AGE) {
-            throw new DomainException(DomainConstants.USER_UNDERAGE);
         }
     }
 }

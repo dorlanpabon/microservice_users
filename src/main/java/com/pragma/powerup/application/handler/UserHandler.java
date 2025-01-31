@@ -1,5 +1,7 @@
 package com.pragma.powerup.application.handler;
 
+import com.pragma.powerup.application.dto.UserClientRequest;
+import com.pragma.powerup.application.dto.UserEmployeeRequest;
 import com.pragma.powerup.application.dto.UserOwnerRequest;
 import com.pragma.powerup.application.dto.UserResponse;
 import com.pragma.powerup.application.mapper.UserRequestMapper;
@@ -33,6 +35,18 @@ public class UserHandler implements IUserHandler {
     public UserResponse getUser(String email) {
         User user = userServicePort.getUser(email);
         return userRequestMapper.toUserResponse(user);
+    }
+
+    @Override
+    public void saveUserEmployee(UserEmployeeRequest userEmployeeRequest) {
+        User user = userRequestMapper.toUser(userEmployeeRequest);
+        userServicePort.saveEmployeeUser(user);
+    }
+
+    @Override
+    public void saveUserClient(UserClientRequest userClientRequest) {
+        User user = userRequestMapper.toUser(userClientRequest);
+        userServicePort.saveClientUser(user);
     }
 
 }

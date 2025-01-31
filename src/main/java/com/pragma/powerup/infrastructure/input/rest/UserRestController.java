@@ -1,5 +1,6 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
+import com.pragma.powerup.application.dto.UserClientRequest;
 import com.pragma.powerup.application.dto.UserEmployeeRequest;
 import com.pragma.powerup.application.dto.UserOwnerRequest;
 import com.pragma.powerup.application.handler.IUserHandler;
@@ -64,6 +65,21 @@ public class UserRestController {
     @PostMapping("/employee")
     @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<Void> saveUserEmployee(@Valid @RequestBody UserEmployeeRequest userEmployeeRequest) {
+        userHandler.saveUserEmployee(userEmployeeRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    // Create client user
+    @Operation(summary = "Create a new user client",
+            description = "Add a new user client to the system")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User client created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content())
+    })
+    @PostMapping("/client")
+    @PreAuthorize("hasRole('OWNER')")
+    public ResponseEntity<Void> saveUserClient(@Valid @RequestBody UserClientRequest userClientRequest) {
+        userHandler.saveUserClient(userClientRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

@@ -28,7 +28,7 @@ public class UserEntity {
     @Column(nullable = false, length = 13)
     private String phone;
 
-    @Column(name = "birth_date", nullable = false)
+    @Column(name = "birth_date", nullable = true)
     private LocalDate birthDate;
 
     @Column(nullable = false, unique = true)

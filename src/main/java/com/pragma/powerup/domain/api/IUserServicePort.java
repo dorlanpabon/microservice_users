@@ -9,4 +9,8 @@ public interface IUserServicePort {
     void isOwner(Long userId);
 
     User getUser(String email);
+
+    void saveEmployeeUser(User user);
+
+    void saveClientUser(User user);
 }

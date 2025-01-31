@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/signin", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .antMatchers("/users/client","/auth/signin", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

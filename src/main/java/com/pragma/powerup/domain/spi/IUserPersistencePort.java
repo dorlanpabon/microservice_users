@@ -8,7 +8,7 @@ public interface IUserPersistencePort {
 
     boolean existsByEmail(String email);
 
-    void saveOwnerUser(User user);
+    void saveUser(User user);
 
     boolean existsByDocumentNumber(String documentNumber);
 

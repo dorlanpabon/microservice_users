@@ -6,45 +6,45 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
-import java.time.LocalDate;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "Object that represents the request to create a new owner user")
-public class UserOwnerRequest {
+@Schema(description = "Object that represents the request to create a new client user")
+public class UserClientRequest {
 
     @NotBlank(message = ValidationConstants.FIRST_NAME_REQUIRED)
-    @Schema(description = "First name of the owner", example = "Juan")
+    @Schema(description = "First name of the client", example = "Juan")
     private String firstName;
 
     @NotBlank(message = ValidationConstants.LAST_NAME_REQUIRED)
-    @Schema(description = "Last name of the owner", example = "Pabon")
+    @Schema(description = "Last name of the client", example = "Pabon")
     private String lastName;
 
     @NotNull(message = ValidationConstants.DOCUMENT_NUMBER_REQUIRED)
     @Min(value = 1, message = ValidationConstants.DOCUMENT_NUMBER_POSITIVE)
-    @Schema(description = "Document number of the owner", example = "123456789")
+    @Schema(description = "Document number of the client", example = "1234567894")
     private String documentNumber;
 
     @NotBlank(message = ValidationConstants.PHONE_REQUIRED)
     @Size(max = 13, message = ValidationConstants.PHONE_MAX_LENGTH)
     @Pattern(regexp = ValidationConstants.PHONE_REGEX, message = ValidationConstants.PHONE_INVALID_FORMAT)
-    @Schema(description = "Phone number of the owner, must include country code", example = "+573005698325")
+    @Schema(description = "Phone number of the client, must include country code", example = "+573005698325")
     private String phone;
-
-    @Past(message = ValidationConstants.BIRTH_DATE_PAST)
-    @Schema(description = "Birth date of the owner in format YYYY-MM-DD", example = "1990-05-15")
-    private LocalDate birthDate;
 
     @NotBlank(message = ValidationConstants.EMAIL_REQUIRED)
     @Email(message = ValidationConstants.EMAIL_INVALID_FORMAT)
-    @Schema(description = "Email address of the owner", example = "juan.pabon2@pragma.com.co")
+    @Schema(description = "Email address of the client", example = "juan.pabon4@pragma.com.co")
     private String email;
 
     @NotBlank(message = ValidationConstants.PASSWORD_REQUIRED)
     @Size(min = 8, message = ValidationConstants.PASSWORD_MIN_LENGTH)
-    @Schema(description = "Password of the owner (minimum 8 characters)", example = "password123")
+    @Schema(description = "Password of the client (minimum 8 characters)", example = "password123")
     private String password;
 }

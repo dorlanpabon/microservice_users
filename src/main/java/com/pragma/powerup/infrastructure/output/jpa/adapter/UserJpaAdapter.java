@@ -21,7 +21,7 @@ public class UserJpaAdapter implements IUserPersistencePort {
     }
 
     @Override
-    public void saveOwnerUser(User user) {
+    public void saveUser(User user) {
         userRepository.save(userEntityMapper.toEntity(user));
     }
 
