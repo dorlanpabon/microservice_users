@@ -16,4 +16,6 @@ public interface IUserHandler {
     void saveUserEmployee(UserEmployeeRequest userEmployeeRequest);
 
     void saveUserClient(UserClientRequest userClientRequest);
+
+    String getPhone(Long userId);
 }

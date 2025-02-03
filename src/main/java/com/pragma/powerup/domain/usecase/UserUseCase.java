@@ -97,6 +97,12 @@ public class UserUseCase implements IUserServicePort {
         userPersistencePort.saveUser(user);
     }
 
+    @Override
+    public String getPhone(Long userId) {
+        return userPersistencePort.getPhone(userId)
+                .orElseThrow(() -> new DomainException(DomainConstants.PHONE_NOT_FOUND)).getPhone();
+    }
+
     private void validateUserOwner(User user) {
         validateCommonUserFields(user);
         if (Period.between(user.getBirthDate(), LocalDate.now()).getYears() < DomainConstants.MINIMUM_AGE) {

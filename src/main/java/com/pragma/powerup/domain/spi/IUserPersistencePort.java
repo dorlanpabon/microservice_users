@@ -15,4 +15,6 @@ public interface IUserPersistencePort {
     boolean isOwner(Long userId, Long roleId);
 
     Optional<User> getUser(String email);
+
+    Optional<User> getPhone(Long userId);
 }

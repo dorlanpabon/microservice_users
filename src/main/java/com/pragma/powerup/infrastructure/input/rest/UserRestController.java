@@ -69,7 +69,6 @@ public class UserRestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    // Create client user
     @Operation(summary = "Create a new user client",
             description = "Add a new user client to the system")
     @ApiResponses(value = {
@@ -81,5 +80,18 @@ public class UserRestController {
     public ResponseEntity<Void> saveUserClient(@Valid @RequestBody UserClientRequest userClientRequest) {
         userHandler.saveUserClient(userClientRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @Operation(summary = "Get phone by user ID",
+            description = "Retrieve a phone by its user ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Phone retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Phone not found", content = @Content())
+    })
+    @GetMapping("/phone/{userId}")
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    public ResponseEntity<String> getPhone(@Valid @PathVariable Long userId) {
+        String phone = userHandler.getPhone(userId);
+        return ResponseEntity.ok(phone);
     }
 }

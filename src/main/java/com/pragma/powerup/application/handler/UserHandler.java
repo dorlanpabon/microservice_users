@@ -49,4 +49,9 @@ public class UserHandler implements IUserHandler {
         userServicePort.saveClientUser(user);
     }
 
+    @Override
+    public String getPhone(Long userId) {
+        return userServicePort.getPhone(userId);
+    }
+
 }

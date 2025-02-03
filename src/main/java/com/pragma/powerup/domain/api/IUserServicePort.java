@@ -13,4 +13,6 @@ public interface IUserServicePort {
     void saveEmployeeUser(User user);
 
     void saveClientUser(User user);
+
+    String getPhone(Long userId);
 }
