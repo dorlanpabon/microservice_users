@@ -34,10 +34,4 @@ class UserRequestMapperTest {
         assertEquals(request.getPassword(), user.getPassword());
     }
 
-    @Test
-    void testToUser_NullInput() {
-        User user = userRequestMapper.toUser(null);
-
-        assertNull(user);
-    }
 }

@@ -4,6 +4,7 @@ import com.pragma.powerup.application.dto.UserClientRequest;
 import com.pragma.powerup.application.dto.UserEmployeeRequest;
 import com.pragma.powerup.application.dto.UserOwnerRequest;
 import com.pragma.powerup.application.handler.IUserHandler;
+import com.pragma.powerup.infrastructure.constants.InfrastructureConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -37,7 +38,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content())
     })
     @PostMapping("/owner")
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    @PreAuthorize(InfrastructureConstants.HAS_ROLE_ADMINISTRATOR)
     public ResponseEntity<Void> saveUserOwner(@Valid @RequestBody UserOwnerRequest userOwnerRequest) {
         userHandler.saveUserOwner(userOwnerRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -50,7 +51,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content())
     })
     @GetMapping("/validate-owner/{userId}")
-    @PreAuthorize("hasRole('OWNER')")
+    @PreAuthorize(InfrastructureConstants.HAS_ROLE_ADMINISTRATOR)
     public ResponseEntity<Void> validateOwner(@Valid @PathVariable Long userId) {
         userHandler.validateOwner(userId);
         return ResponseEntity.ok().build();
@@ -63,7 +64,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content())
     })
     @PostMapping("/employee")
-    @PreAuthorize("hasRole('OWNER')")
+    @PreAuthorize(InfrastructureConstants.HAS_ROLE_OWNER)
     public ResponseEntity<Void> saveUserEmployee(@Valid @RequestBody UserEmployeeRequest userEmployeeRequest) {
         userHandler.saveUserEmployee(userEmployeeRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -76,7 +77,6 @@ public class UserRestController {
             @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content())
     })
     @PostMapping("/client")
-    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<Void> saveUserClient(@Valid @RequestBody UserClientRequest userClientRequest) {
         userHandler.saveUserClient(userClientRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -89,7 +89,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "404", description = "Phone not found", content = @Content())
     })
     @GetMapping("/phone/{userId}")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize(InfrastructureConstants.HAS_ROLE_EMPLOYEE)
     public ResponseEntity<String> getPhone(@Valid @PathVariable Long userId) {
         String phone = userHandler.getPhone(userId);
         return ResponseEntity.ok(phone);

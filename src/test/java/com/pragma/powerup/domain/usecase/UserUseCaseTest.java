@@ -4,6 +4,7 @@ import com.pragma.powerup.domain.enums.RolesEnum;
 import com.pragma.powerup.domain.exception.DomainException;
 import com.pragma.powerup.domain.model.Role;
 import com.pragma.powerup.domain.model.User;
+import com.pragma.powerup.domain.spi.IPasswordEncoderPort;
 import com.pragma.powerup.domain.spi.IRolePersistencePort;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +31,9 @@ class UserUseCaseTest {
     @Mock
     private IRolePersistencePort rolePersistencePort;
 
+    @Mock
+    private IPasswordEncoderPort passwordEncoderPort;
+
     @InjectMocks
     private UserUseCase userUseCase;
 
@@ -42,6 +46,7 @@ class UserUseCaseTest {
         user.setPhone("+123456789");
         user.setBirthDate(LocalDate.of(2000, 1, 1));
         user.setDocumentNumber("123456789");
+        user.setPassword("securepassword");
     }
 
     @Test
@@ -49,6 +54,7 @@ class UserUseCaseTest {
         when(userPersistencePort.existsByEmail(anyString())).thenReturn(false);
         when(userPersistencePort.existsByDocumentNumber(anyString())).thenReturn(false);
         when(rolePersistencePort.getRoleByName(any(RolesEnum.class))).thenReturn(Optional.of(new Role()));
+        when(passwordEncoderPort.encode(anyString())).thenReturn("encodedPassword");
 
         assertDoesNotThrow(() -> userUseCase.saveOwnerUser(user));
 
