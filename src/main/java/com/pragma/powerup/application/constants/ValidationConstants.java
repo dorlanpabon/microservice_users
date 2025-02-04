@@ -16,7 +16,7 @@ public class ValidationConstants {
     public static final String PASSWORD_REQUIRED = "The password is required";
     public static final String PASSWORD_MIN_LENGTH = "The password must have a minimum of 8 characters";
 
-    private ValidationConstants() {
+    ValidationConstants() {
         throw new IllegalStateException("Utility class");
     }
 }

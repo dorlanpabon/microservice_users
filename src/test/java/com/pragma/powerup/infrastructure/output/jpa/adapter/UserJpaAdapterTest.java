@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -99,4 +101,41 @@ class UserJpaAdapterTest {
         assertFalse(exists);
         verify(userRepository).existsByDocumentNumber("987654321");
     }
+
+    @Test
+    void testGetUserByEmail_UserExists() {
+        when(userRepository.findByEmail("test@test.com")).thenReturn(Optional.ofNullable(userEntity));
+        when(userEntityMapper.toDomain(userEntity)).thenReturn(user);
+
+        Optional<User> userByEmail = userJpaAdapter.getUser("test@test.com");
+
+        assertTrue(userByEmail.isPresent());
+        assertEquals(user, userByEmail.get());
+        verify(userRepository).findByEmail("test@test.com");
+        verify(userEntityMapper).toDomain(userEntity);
+    }
+
+    @Test
+    void testIsOwner_Success() {
+        when(userRepository.existsByIdAndRoleId(1L, 1L)).thenReturn(true);
+
+        boolean isOwner = userJpaAdapter.isOwner(1L, 1L);
+
+        assertTrue(isOwner);
+        verify(userRepository).existsByIdAndRoleId(1L, 1L);
+    }
+
+    @Test
+    void testGetPhone_UserExists() {
+        when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(userEntity));
+        when(userEntityMapper.toDomain(userEntity)).thenReturn(user);
+
+        Optional<User> userByPhone = userJpaAdapter.getPhone(1L);
+
+        assertTrue(userByPhone.isPresent());
+        assertEquals(user, userByPhone.get());
+        verify(userRepository).findById(1L);
+        verify(userEntityMapper).toDomain(userEntity);
+    }
+
 }

@@ -6,7 +6,7 @@ public class InfrastructureConstants {
     public static final String HAS_ROLE_EMPLOYEE = "hasRole('EMPLOYEE')";
     public static final String HAS_ROLE_ADMINISTRATOR = "hasRole('ADMINISTRATOR')";
 
-    private InfrastructureConstants() {
+    InfrastructureConstants() {
         throw new IllegalStateException("Utility class");
     }
 }

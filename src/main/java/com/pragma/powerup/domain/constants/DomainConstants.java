@@ -18,7 +18,7 @@ public class DomainConstants {
     public static final String EMPLOYEE_ERROR_SAVE = "Error saving employee";
     public static final String PHONE_NOT_FOUND = "Phone not found";
 
-    private DomainConstants() {
+    DomainConstants() {
         throw new IllegalStateException("Utility class");
     }
 }
